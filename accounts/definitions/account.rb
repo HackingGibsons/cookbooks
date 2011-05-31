@@ -38,6 +38,9 @@ define :account, :account_type => "user", :uid => nil,  :comment => nil, :group 
       owner params[:name]
       group params[:gid] || params[:group]
       mode "0700"
+      not_if do
+        ::Dir.exist?("#{node[:accounts][:dir]}/#{params[:name]}/.ssh")
+      end
     end
   end
 
